@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تماس با ما - کافه آرین</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-dark: #0f1f38;
+            --primary-light: #2d4d7a;
+            --secondary: #4a90e2;
+            --accent: #63b3ed;
+            --accent-light: #90cdf4;
+            --text: #f7fafc;
+            --text-light: #e2e8f0;
+            --card-bg: rgba(30, 58, 95, 0.7);
+            --card-bg-solid: #1e3a5f;
+            --nav-bg: rgba(15, 31, 56, 0.95);
+            --success: #48bb78;
+            --warning: #ed8936;
+            --gradient: linear-gradient(135deg, #1e3a5f 0%, #4a90e2 100%);
+            --gradient-light: linear-gradient(135deg, #2d4d7a 0%, #63b3ed 100%);
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--primary-dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* انیمیشن‌های سفارشی */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes slideInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--accent); }
+            50% { box-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent-light); }
+        }
+
+        /* استایل‌های اصلی */
+        .floating-element {
+            position: absolute;
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        /* ناوبری */
+        .navbar {
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.8rem 0;
+            background: rgba(15, 31, 56, 0.98);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-light);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* هیرو صفحه تماس */
+        .contact-hero {
+            height: 40vh;
+            background: 
+                linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%),
+                radial-gradient(circle at 20% 80%, rgba(74, 144, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(99, 179, 237, 0.1) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(74, 144, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(99, 179, 237, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(144, 205, 244, 0.05) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .contact-hero-content {
+            z-index: 2;
+            position: relative;
+            animation: slideInUp 1.5s ease-out;
+        }
+
+        .contact-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-hero p {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* محتوای اصلی صفحه تماس */
+        .contact-container {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        /* کارت‌های شبکه‌های اجتماعی */
+        .social-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .social-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-light);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .social-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 179, 237, 0.5);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .social-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .social-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-card:hover .social-icon {
+            transform: scale(1.1);
+        }
+
+        .instagram .social-icon {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+        }
+
+        .telegram .social-icon {
+            background: #0088cc;
+            color: white;
+        }
+
+        .whatsapp .social-icon {
+            background: #25D366;
+            color: white;
+        }
+
+        .social-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .social-description {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .social-btn {
+            background: var(--gradient-light);
+            color: var(--primary-dark);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.3);
+        }
+
+        /* فرم تماس */
+        .contact-form-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .form-title {
+            font-size: 2rem;
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(15, 31, 56, 0.6);
+            border: 1px solid rgba(99, 179, 237, 0.3);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--gradient-light);
+            color: var(--primary-dark);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        /* اطلاعات تماس */
+        .contact-info-section {
+            margin-top: 3rem;
+        }
+
+        .info-title {
+            font-size: 2rem;
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 179, 237, 0.5);
+            box-shadow: var(--shadow);
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .info-content h3 {
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .info-content p {
+            color: var(--text-light);
+        }
+
+        /* نقشه */
+        .map-section {
+            margin-top: 3rem;
+        }
+
+        .map-title {
+            font-size: 2rem;
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            height: 400px;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        /* فوتر */
+        footer {
+            background: 
+                linear-gradient(135deg, #0a1425 0%, #0f1f38 50%, #1a365d 100%),
+                radial-gradient(circle at 80% 20%, rgba(30, 58, 95, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(15, 31, 56, 0.4) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid rgba(99, 179, 237, 0.3);
+            padding: 4rem 1rem 2rem;
+            margin-top: 4rem;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e3a5f' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: backgroundShift 20s linear infinite;
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-section h3 {
+            color: var(--accent-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 0.7rem;
+            font-weight: 700;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .footer-section p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(99, 179, 237, 0.4);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .footer-link i {
+            margin-left: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-light);
+            transform: translateX(-5px);
+        }
+
+        .footer-link:hover i {
+            transform: translateX(-3px);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .contact-details {
+            flex: 1;
+        }
+
+        .contact-label {
+            display: block;
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-value {
+            display: block;
+            color: var(--text);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-value:hover {
+            color: var(--accent-light);
+        }
+
+        .designer-credit {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(99, 179, 237, 0.1);
+            color: var(--text-light);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .designer-credit strong {
+            color: var(--accent-light);
+            font-weight: 800;
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 1200px) {
+            .nav-container {
+                padding: 0 1.5rem;
+            }
+            
+            .contact-hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .contact-hero p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .contact-hero {
+                height: 35vh;
+                margin-top: 120px;
+            }
+            
+            .contact-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-hero p {
+                font-size: 1rem;
+            }
+            
+            .social-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2.5rem;
+            }
+            
+            .footer-section h3::after {
+                right: 50%;
+                transform: translateX(50%);
+            }
+            
+            .contact-item {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav-container, .contact-container {
+                padding: 0 1rem;
+            }
+            
+            .contact-hero {
+                height: 30vh;
+            }
+            
+            .contact-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .contact-form-container {
+                padding: 1.5rem;
+            }
+        }
+
+        /* اسکرول بار سفارشی */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- عناصر شناور در پس‌زمینه -->
+    <div class="floating-element" style="width: 150px; height: 150px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+    <div class="floating-element" style="width: 100px; height: 100px; top: 70%; right: 10%; animation-delay: 2s;"></div>
+    <div class="floating-element" style="width: 120px; height: 120px; top: 30%; right: 15%; animation-delay: 4s;"></div>
+    <div class="floating-element" style="width: 80px; height: 80px; bottom: 20%; left: 8%; animation-delay: 1s;"></div>
+
+    <!-- ناوبری -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="./index.html" class="logo">
+                <i class="fas fa-mug-hot"></i>
+                کافه آرین
+            </a>
+            <div class="nav-links">
+                <a href="./index.html" class="nav-link">صفحه اصلی</a>
+                <a href="./gallery.html" class="nav-link">گالری تصاویر</a>
+                <a href="./contact.html" class="nav-link">تماس با ما</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- هیرو صفحه تماس -->
+    <section class="contact-hero">
+        <div class="contact-hero-content">
+            <h1>تماس با کافه آرین</h1>
+            <p>ما اینجا هستیم تا به سوالات و پیشنهادات شما پاسخ دهیم</p>
+        </div>
+    </section>
+
+    <!-- محتوای اصلی -->
+    <main class="contact-container">
+        <!-- کارت‌های شبکه‌های اجتماعی -->
+        <div class="social-cards">
+            <div class="social-card instagram">
+                <div class="social-icon">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <h3 class="social-title">اینستاگرام</h3>
+                <p class="social-description">جدیدترین عکس‌ها، رویدادها و تخفیف‌های ویژه را در اینستاگرام ما دنبال کنید</p>
+                <a href="https://instagram.com/cafe_arin" class="social-btn" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                    دنبال کردن
+                </a>
+            </div>
+            
+            <div class="social-card telegram">
+                <div class="social-icon">
+                    <i class="fab fa-telegram"></i>
+                </div>
+                <h3 class="social-title">تلگرام</h3>
+                <p class="social-description">در کانال تلگرام ما عضو شوید و از آخرین اخبار و پیشنهادات ویژه مطلع شوید</p>
+                <a href="https://t.me/cafe_arin" class="social-btn" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    عضویت در کانال
+                </a>
+            </div>
+            
+            <div class="social-card whatsapp">
+                <div class="social-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <h3 class="social-title">واتساپ</h3>
+                <p class="social-description">برای رزرو میز، سوالات فوری و دریافت مشاوره از طریق واتساپ با ما در ارتباط باشید</p>
+                <a href="https://wa.me/989123456789" class="social-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    ارسال پیام
+                </a>
+            </div>
+        </div>
+
+        <!-- فرم تماس و اطلاعات -->
+        <div class="contact-grid">
+            <!-- فرم تماس -->
+            <div class="contact-form-container">
+                <h2 class="form-title">پیام به کافه آرین</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">نام و نام خانوادگی</label>
+                        <input type="text" id="name" class="form-input" placeholder="نام خود را وارد کنید" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">ایمیل</label>
+                        <input type="email" id="email" class="form-input" placeholder="example@domain.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" class="form-label">شماره تماس</label>
+                        <input type="tel" id="phone" class="form-input" placeholder="09xxxxxxxxx">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject" class="form-label">موضوع</label>
+                        <input type="text" id="subject" class="form-input" placeholder="موضوع پیام خود را وارد کنید" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label">متن پیام</label>
+                        <textarea id="message" class="form-textarea" placeholder="متن پیام خود را اینجا بنویسید..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        ارسال پیام
+                    </button>
+                </form>
+            </div>
+            
+            <!-- اطلاعات تماس -->
+            <div class="contact-info-section">
+                <h2 class="info-title">اطلاعات تماس</h2>
+                <div class="contact-info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>آدرس کافه</h3>
+                            <p>تهران، خیابان نمونه، پلاک ۱۲۳، کافه آرین</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>تلفن تماس</h3>
+                            <p>۰۲۱-۱۲۳۴۵۶۷۸</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>ساعات کاری</h3>
+                            <p>هر روز از ساعت ۸:۰۰ صبح تا ۱۲:۰۰ شب</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>ایمیل</h3>
+                            <p>info@cafearin.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- نقشه -->
+        <div class="map-section">
+            <h2 class="map-title">موقعیت مکانی کافه</h2>
+            <div class="map-container">
+                <p>نقشه گوگل در اینجا نمایش داده می‌شود</p>
+                <!-- در نسخه واقعی می‌توانید کد embed گوگل مپ را اینجا قرار دهید -->
+            </div>
+        </div>
+    </main>
+
+    <!-- فوتر -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>درباره کافه آرین</h3>
+                <p>با بیش از ۵ سال سابقه درخشان در ارائه قهوه و نوشیدنی‌های ویژه، میزبان لحظات خوش و به یاد ماندنی شما در فضایی مدرن و آرامش‌بخش هستیم.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>لینک‌های سریع</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" class="footer-link"><i class="fas fa-chevron-left"></i>صفحه اصلی</a></li>
+                    <li><a href="gallery.html" class="footer-link"><i class="fas fa-chevron-left"></i>گالری تصاویر</a></li>
+                    <li><a href="contact.html" class="footer-link"><i class="fas fa-chevron-left"></i>تماس با ما</a></li>
+                    <li><a href="#" class="footer-link"><i class="fas fa-chevron-left"></i>رزرو میز</a></li>
+                    <li><a href="#" class="footer-link"><i class="fas fa-chevron-left"></i>رویدادها</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>اطلاعات تماس</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">آدرس</span>
+                            <span class="contact-value">تهران، خیابان نمونه، پلاک ۱۲۳</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">تلفن</span>
+                            <a href="tel:+982112345678" class="contact-value">۰۲۱-۱۲۳۴۵۶۷۸</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">ساعات کاری</span>
+                            <span class="contact-value">۸:۰۰ صبح تا ۱۲:۰۰ شب</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="designer-credit">
+            طراحی و توسعه توسط <strong>آرین حسنی نیا</strong>
+        </div>
+    </footer>
+
+    <script>
+        // مدیریت فرم تماس
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // جمع‌آوری اطلاعات فرم
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            // در اینجا می‌توانید اطلاعات را به سرور ارسال کنید
+            // برای نمونه، یک پیام موفقیت نمایش می‌دهیم
+            alert('پیام شما با موفقیت ارسال شد! به زودی با شما تماس خواهیم گرفت.');
+            
+            // ریست کردن فرم
+            this.reset();
+        });
+
+        // تغییر استایل نوار ناوبری هنگام اسکرول
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

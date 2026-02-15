@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رویدادها - کافه آرین</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-dark: #0f1f38;
+            --primary-light: #2d4d7a;
+            --secondary: #4a90e2;
+            --accent: #63b3ed;
+            --accent-light: #90cdf4;
+            --text: #f7fafc;
+            --text-light: #e2e8f0;
+            --card-bg: rgba(30, 58, 95, 0.7);
+            --card-bg-solid: #1e3a5f;
+            --nav-bg: rgba(15, 31, 56, 0.95);
+            --success: #48bb78;
+            --warning: #ed8936;
+            --gradient: linear-gradient(135deg, #1e3a5f 0%, #4a90e2 100%);
+            --gradient-light: linear-gradient(135deg, #2d4d7a 0%, #63b3ed 100%);
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--primary-dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* انیمیشن‌های سفارشی */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes slideInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--accent); }
+            50% { box-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent-light); }
+        }
+
+        /* استایل‌های اصلی */
+        .floating-element {
+            position: absolute;
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        /* ناوبری */
+        .navbar {
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.8rem 0;
+            background: rgba(15, 31, 56, 0.98);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-light);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* هیرو صفحه رویدادها */
+        .events-hero {
+            height: 50vh;
+            background: 
+                linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%),
+                radial-gradient(circle at 20% 80%, rgba(74, 144, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(99, 179, 237, 0.1) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .events-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(74, 144, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(99, 179, 237, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(144, 205, 244, 0.05) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .events-hero-content {
+            z-index: 2;
+            position: relative;
+            animation: slideInUp 1.5s ease-out;
+        }
+
+        .events-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .events-hero p {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* فیلترهای رویدادها */
+        .events-filters {
+            background: var(--card-bg-solid);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 80px;
+            z-index: 900;
+            border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+            box-shadow: var(--shadow);
+        }
+
+        .filters-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--text);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-light);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            color: var(--primary-dark);
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .filter-btn.active::before,
+        .filter-btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* محتوای اصلی صفحه رویدادها */
+        .events-container {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .events-section {
+            margin-bottom: 4rem;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--accent-light);
+            margin-bottom: 2.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: var(--gradient-light);
+            border-radius: 2px;
+        }
+
+        /* کارت‌های رویداد */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-light);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 179, 237, 0.5);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .event-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .event-image {
+            width: 100%;
+            height: 200px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-light);
+            font-size: 3.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(15, 31, 56, 0.7));
+        }
+
+        .event-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--success);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .event-badge.upcoming {
+            background: var(--accent);
+        }
+
+        .event-badge.past {
+            background: var(--warning);
+        }
+
+        .event-content {
+            padding: 1.5rem;
+        }
+
+        .event-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .event-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .event-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .event-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(99, 179, 237, 0.2);
+        }
+
+        .event-time, .event-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .detail-btn, .register-btn {
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex: 1;
+            text-decoration: none;
+        }
+
+        .detail-btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .register-btn {
+            background: var(--gradient-light);
+            color: var(--primary-dark);
+            box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+        }
+
+        .detail-btn:hover {
+            background: rgba(99, 179, 237, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(74, 144, 226, 0.4);
+        }
+
+        /* مدال جزئیات رویداد */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 20, 35, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--card-bg-solid);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(99, 179, 237, 0.3);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            animation: slideInUp 0.4s ease;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.2rem;
+            left: 1.2rem;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--accent);
+            background: none;
+            border: none;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            background: rgba(99, 179, 237, 0.1);
+            transform: rotate(90deg);
+        }
+
+        /* فوتر */
+        footer {
+            background: 
+                linear-gradient(135deg, #0a1425 0%, #0f1f38 50%, #1a365d 100%),
+                radial-gradient(circle at 80% 20%, rgba(30, 58, 95, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(15, 31, 56, 0.4) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid rgba(99, 179, 237, 0.3);
+            padding: 4rem 1rem 2rem;
+            margin-top: 4rem;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e3a5f' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: backgroundShift 20s linear infinite;
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-section h3 {
+            color: var(--accent-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 0.7rem;
+            font-weight: 700;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .footer-section p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(99, 179, 237, 0.4);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .footer-link i {
+            margin-left: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-light);
+            transform: translateX(-5px);
+        }
+
+        .footer-link:hover i {
+            transform: translateX(-3px);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .contact-details {
+            flex: 1;
+        }
+
+        .contact-label {
+            display: block;
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-value {
+            display: block;
+            color: var(--text);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-value:hover {
+            color: var(--accent-light);
+        }
+
+        .designer-credit {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(99, 179, 237, 0.1);
+            color: var(--text-light);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .designer-credit strong {
+            color: var(--accent-light);
+            font-weight: 800;
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 1200px) {
+            .nav-container, .filters-container {
+                padding: 0 1.5rem;
+            }
+            
+            .events-hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .events-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .events-hero p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .events-hero {
+                height: 40vh;
+                margin-top: 120px;
+            }
+            
+            .events-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .events-hero p {
+                font-size: 1rem;
+            }
+            
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2.5rem;
+            }
+            
+            .footer-section h3::after {
+                right: 50%;
+                transform: translateX(50%);
+            }
+            
+            .contact-item {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav-container, .filters-container, .events-container {
+                padding: 0 1rem;
+            }
+            
+            .events-hero {
+                height: 35vh;
+            }
+            
+            .events-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .modal-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .event-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* اسکرول بار سفارشی */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- عناصر شناور در پس‌زمینه -->
+    <div class="floating-element" style="width: 150px; height: 150px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+    <div class="floating-element" style="width: 100px; height: 100px; top: 70%; right: 10%; animation-delay: 2s;"></div>
+    <div class="floating-element" style="width: 120px; height: 120px; top: 30%; right: 15%; animation-delay: 4s;"></div>
+    <div class="floating-element" style="width: 80px; height: 80px; bottom: 20%; left: 8%; animation-delay: 1s;"></div>
+
+    <!-- ناوبری -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="./index.html" class="logo">
+                <i class="fas fa-mug-hot"></i>
+                کافه آرین
+            </a>
+            <div class="nav-links">
+                <a href="./index.html" class="nav-link">صفحه اصلی</a>
+                <a href="./gallery.html" class="nav-link">گالری تصاویر</a>
+                <a href="./events.html" class="nav-link">رویدادها</a>
+                <a href="./contact.html" class="nav-link">تماس با ما</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- هیرو رویدادها -->
+    <section class="events-hero">
+        <div class="events-hero-content">
+            <h1>رویدادهای کافه آرین</h1>
+            <p>شرکت در شب‌های شعر، موسیقی زنده، کارگاه‌های آموزشی و رویدادهای ویژه</p>
+        </div>
+    </section>
+
+    <!-- فیلترهای رویدادها -->
+    <div class="events-filters">
+        <div class="filters-container">
+            <button class="filter-btn active" data-filter="all">همه رویدادها</button>
+            <button class="filter-btn" data-filter="upcoming">رویدادهای آینده</button>
+            <button class="filter-btn" data-filter="past">رویدادهای گذشته</button>
+            <button class="filter-btn" data-filter="music">موسیقی</button>
+            <button class="filter-btn" data-filter="workshop">کارگاه‌ها</button>
+            <button class="filter-btn" data-filter="cultural">فرهنگی و هنری</button>
+        </div>
+    </div>
+
+    <!-- محتوای اصلی -->
+    <main class="events-container">
+        <!-- رویدادهای آینده -->
+        <section class="events-section">
+            <h2 class="section-title">رویدادهای آینده</h2>
+            <div class="events-grid" id="upcomingEvents">
+                <!-- رویدادها به صورت داینامیک اضافه می‌شوند -->
+            </div>
+        </section>
+
+        <!-- رویدادهای گذشته -->
+        <section class="events-section">
+            <h2 class="section-title">رویدادهای گذشته</h2>
+            <div class="events-grid" id="pastEvents">
+                <!-- رویدادها به صورت داینامیک اضافه می‌شوند -->
+            </div>
+        </section>
+    </main>
+
+    <!-- مدال جزئیات رویداد -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- فوتر -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>درباره کافه آرین</h3>
+                <p>با بیش از ۵ سال سابقه درخشان در ارائه قهوه و نوشیدنی‌های ویژه، میزبان لحظات خوش و به یاد ماندنی شما در فضایی مدرن و آرامش‌بخش هستیم.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>لینک‌های سریع</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" class="footer-link"><i class="fas fa-chevron-left"></i>صفحه اصلی</a></li>
+                    <li><a href="gallery.html" class="footer-link"><i class="fas fa-chevron-left"></i>گالری تصاویر</a></li>
+                    <li><a href="events.html" class="footer-link"><i class="fas fa-chevron-left"></i>رویدادها</a></li>
+                    <li><a href="contact.html" class="footer-link"><i class="fas fa-chevron-left"></i>تماس با ما</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>اطلاعات تماس</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">آدرس</span>
+                            <span class="contact-value">تهران، خیابان نمونه، پلاک ۱۲۳</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">تلفن</span>
+                            <a href="tel:+982112345678" class="contact-value">۰۲۱-۱۲۳۴۵۶۷۸</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">ساعات کاری</span>
+                            <span class="contact-value">۸:۰۰ صبح تا ۱۲:۰۰ شب</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="designer-credit">
+            طراحی و توسعه توسط <strong>آرین حسنی نیا</strong>
+        </div>
+    </footer>
+
+    <script>
+        // داده‌های رویدادها
+        const eventsData = {
+            upcoming: [
+                {
+                    id: 1,
+                    title: "شب شعر و موسیقی زنده",
+                    description: "شبی به یاد ماندنی با شعرخوانی شاعران جوان و اجرای موسیقی زنده در فضایی صمیمی",
+                    date: "۱۴۰۲/۰۹/۱۵",
+                    time: "۲۰:۰۰ - ۲۳:۰۰",
+                    price: "رایگان",
+                    category: ["cultural", "music"],
+                    image: "fas fa-music",
+                    details: "در این شب ویژه، میزبان شاعران جوان و با استعداد هستیم که آثار خود را برای شما می‌خوانند. همچنین گروه موسیقی ما با اجرای زنده، فضایی دلنشین ایجاد خواهد کرد. این رویداد فرصتی عالی برای علاقه‌مندان به شعر و موسیقی است.",
+                    capacity: 50,
+                    remaining: 15
+                },
+                {
+                    id: 2,
+                    title: "کارگاه تخصصی لاته آرت",
+                    description: "آموزش تکنیک‌های پیشرفته لاته آرت توسط باریستای بین‌المللی",
+                    date: "۱۴۰۲/۰۹/۲۲",
+                    time: "۱۷:۰۰ - ۲۰:۰۰",
+                    price: "۱۵۰,۰۰۰ تومان",
+                    category: ["workshop"],
+                    image: "fas fa-mug-hot",
+                    details: "در این کارگاه تخصصی، با اصول و تکنیک‌های پیشرفته لاته آرت آشنا می‌شوید. این دوره مناسب افرادی است که می‌خواهند مهارت‌های خود را در زمینه طراحی روی قهوه ارتقا دهند.",
+                    capacity: 12,
+                    remaining: 5
+                },
+                {
+                    id: 3,
+                    title: "جشنواره قهوه‌های تک‌خاستگاه",
+                    description: "تجربه طعم‌های منحصر به فرد از قهوه‌های تک‌خاستگاه سراسر جهان",
+                    date: "۱۴۰۲/۰۹/۲۸",
+                    time: "۱۶:۰۰ - ۲۲:۰۰",
+                    price: "۸۰,۰۰۰ تومان",
+                    category: ["cultural"],
+                    image: "fas fa-coffee",
+                    details: "در این جشنواره ویژه، امکان چشیدن قهوه‌های تک‌خاستگاه از مناطق مختلف جهان را دارید. هر قهوه داستان و طعم منحصر به فرد خود را دارد.",
+                    capacity: 30,
+                    remaining: 8
+                }
+            ],
+            past: [
+                {
+                    id: 4,
+                    title: "نمایشگاه عکس \"نور و سایه\"",
+                    description: "نمایشگاه گروهی عکس با موضوع نورپردازی و ترکیب‌بندی",
+                    date: "۱۴۰۲/۰۸/۱۰",
+                    time: "پایان یافته",
+                    price: "برگزار شده",
+                    category: ["cultural"],
+                    image: "fas fa-camera",
+                    details: "این نمایشگاه با استقبال خوب هنردوستان روبرو شد و آثار زیبایی از عکاسان جوان به نمایش گذاشته شد.",
+                    capacity: 0,
+                    remaining: 0
+                },
+                {
+                    id: 5,
+                    title: "کارگاه دمنوش‌های گیاهی",
+                    description: "آشنایی با خواص و روش‌های تهیه دمنوش‌های گیاهی",
+                    date: "۱۴۰۲/۰۸/۲۵",
+                    time: "پایان یافته",
+                    price: "برگزار شده",
+                    category: ["workshop"],
+                    image: "fas fa-leaf",
+                    details: "در این کارگاه شرکت‌کنندگان با خواص درمانی گیاهان مختلف و روش‌های صحیح تهیه دمنوش آشنا شدند.",
+                    capacity: 0,
+                    remaining: 0
+                },
+                {
+                    id: 6,
+                    title: "کنسرت پیانو سولو",
+                    description: "اجرای زنده پیانو با قطعات کلاسیک و معاصر",
+                    date: "۱۴۰۲/۰۷/۱۸",
+                    time: "پایان یافته",
+                    price: "برگزار شده",
+                    category: ["music"],
+                    image: "fas fa-music",
+                    details: "شبی به یاد ماندنی با اجرای پیانو نواز برجسته و شنیدن قطعات زیبای کلاسیک.",
+                    capacity: 0,
+                    remaining: 0
+                }
+            ]
+        };
+
+        // مدیریت وضعیت
+        let currentFilter = 'all';
+
+        // رندر رویدادها
+        function renderEvents() {
+            const upcomingContainer = document.getElementById('upcomingEvents');
+            const pastContainer = document.getElementById('pastEvents');
+            
+            upcomingContainer.innerHTML = '';
+            pastContainer.innerHTML = '';
+
+            // رویدادهای آینده
+            eventsData.upcoming.forEach(event => {
+                if (currentFilter === 'all' || event.category.includes(currentFilter)) {
+                    const eventCard = createEventCard(event, 'upcoming');
+                    upcomingContainer.appendChild(eventCard);
+                }
+            });
+
+            // رویدادهای گذشته
+            eventsData.past.forEach(event => {
+                if (currentFilter === 'all' || event.category.includes(currentFilter)) {
+                    const eventCard = createEventCard(event, 'past');
+                    pastContainer.appendChild(eventCard);
+                }
+            });
+
+            // اگر هیچ رویدادی مطابق فیلتر نبود
+            if (upcomingContainer.children.length === 0 && currentFilter !== 'past') {
+                upcomingContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-light); padding: 2rem;">هیچ رویداد آینده‌ای یافت نشد</p>';
+            }
+            
+            if (pastContainer.children.length === 0 && currentFilter !== 'upcoming') {
+                pastContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-light); padding: 2rem;">هیچ رویداد گذشته‌ای یافت نشد</p>';
+            }
+        }
+
+        function createEventCard(event, type) {
+            const card = document.createElement('div');
+            card.className = 'event-card';
+            card.setAttribute('data-category', event.category.join(' '));
+            
+            const badgeText = type === 'upcoming' ? 'آینده' : 'گذشته';
+            const badgeClass = type === 'upcoming' ? 'upcoming' : 'past';
+            
+            card.innerHTML = `
+                <div class="event-image">
+                    <i class="${event.image}"></i>
+                    <div class="event-badge ${badgeClass}">${badgeText}</div>
+                </div>
+                <div class="event-content">
+                    <div class="event-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        ${event.date}
+                    </div>
+                    <h3 class="event-title">${event.title}</h3>
+                    <p class="event-description">${event.description}</p>
+                    <div class="event-details">
+                        <div class="event-time">
+                            <i class="fas fa-clock"></i>
+                            ${event.time}
+                        </div>
+                        <div class="event-price">
+                            <i class="fas fa-tag"></i>
+                            ${event.price}
+                        </div>
+                    </div>
+                    <div class="event-actions">
+                        <button class="detail-btn" onclick="showEventDetails(${event.id})">
+                            <i class="fas fa-info-circle"></i>
+                            جزئیات
+                        </button>
+                        ${type === 'upcoming' ? `
+                        <button class="register-btn" onclick="registerForEvent(${event.id})">
+                            <i class="fas fa-user-plus"></i>
+                            ثبت نام
+                        </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // نمایش جزئیات رویداد
+        function showEventDetails(eventId) {
+            const event = [...eventsData.upcoming, ...eventsData.past].find(e => e.id === eventId);
+            const modal = document.getElementById('eventModal');
+            const content = document.getElementById('modal-content');
+            
+            if (!event) return;
+            
+            const isUpcoming = eventsData.upcoming.some(e => e.id === eventId);
+            
+            content.innerHTML = `
+                <h2 style="color: var(--accent-light); margin-bottom: 1.5rem; text-align: center;">${event.title}</h2>
+                <div style="background: var(--primary); padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem; text-align: center;">
+                    <i class="${event.image}" style="font-size: 4rem; color: var(--accent-light);"></i>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: var(--primary); padding: 1rem; border-radius: 10px; text-align: center;">
+                        <i class="fas fa-calendar-alt" style="color: var(--accent-light); margin-bottom: 0.5rem;"></i>
+                        <div style="font-weight: 600;">تاریخ</div>
+                        <div style="color: var(--text-light);">${event.date}</div>
+                    </div>
+                    <div style="background: var(--primary); padding: 1rem; border-radius: 10px; text-align: center;">
+                        <i class="fas fa-clock" style="color: var(--accent-light); margin-bottom: 0.5rem;"></i>
+                        <div style="font-weight: 600;">ساعت</div>
+                        <div style="color: var(--text-light);">${event.time}</div>
+                    </div>
+                    <div style="background: var(--primary); padding: 1rem; border-radius: 10px; text-align: center;">
+                        <i class="fas fa-tag" style="color: var(--accent-light); margin-bottom: 0.5rem;"></i>
+                        <div style="font-weight: 600;">هزینه</div>
+                        <div style="color: var(--text-light);">${event.price}</div>
+                    </div>
+                </div>
+                
+                <h3 style="color: var(--accent-light); margin-bottom: 1rem;">شرح رویداد</h3>
+                <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 2rem; text-align: justify;">${event.details}</p>
+                
+                ${isUpcoming ? `
+                <div style="display: flex; justify-content: space-between; align-items: center; background: var(--primary); padding: 1.5rem; border-radius: 12px;">
+                    <div>
+                        <div style="font-size: 0.9rem; color: var(--text-light);">ظرفیت باقی‌مانده</div>
+                        <div style="font-size: 1.2rem; font-weight: 800; color: var(--accent-light);">${event.remaining} نفر از ${event.capacity}</div>
+                    </div>
+                    <button class="register-btn" onclick="registerForEvent(${event.id}); closeModal();" style="padding: 1rem 1.5rem;">
+                        <i class="fas fa-user-plus"></i>
+                        ثبت نام در رویداد
+                    </button>
+                </div>
+                ` : ''}
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        // ثبت نام در رویداد
+        function registerForEvent(eventId) {
+            const event = eventsData.upcoming.find(e => e.id === eventId);
+            if (!event) return;
+            
+            if (event.remaining > 0) {
+                if (confirm(`آیا مایل به ثبت نام در رویداد "${event.title}" هستید؟`)) {
+                    event.remaining--;
+                    alert('ثبت نام شما با موفقیت انجام شد! اطلاعات بیشتر از طریق پیامک برای شما ارسال خواهد شد.');
+                    renderEvents();
+                }
+            } else {
+                alert('ظرفیت این رویداد تکمیل شده است.');
+            }
+        }
+
+        // بستن مدال
+        function closeModal() {
+            document.getElementById('eventModal').style.display = 'none';
+        }
+
+        // فیلتر کردن رویدادها
+        function filterEvents(category) {
+            currentFilter = category;
+            renderEvents();
+        }
+
+        // اجرای کدها پس از لود شدن صفحه
+        document.addEventListener('DOMContentLoaded', function() {
+            renderEvents();
+            
+            // تنظیم رویداد کلیک برای دکمه‌های فیلتر
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // حذف کلاس active از همه دکمه‌ها
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // اضافه کردن کلاس active به دکمه کلیک شده
+                    this.classList.add('active');
+                    
+                    // فیلتر کردن رویدادها
+                    const category = this.getAttribute('data-filter');
+                    filterEvents(category);
+                });
+            });
+            
+            // تنظیم رویداد کلیک برای بستن مدال
+            document.querySelector('.close-modal').addEventListener('click', closeModal);
+            
+            // بستن مدال با کلیک خارج از محتوا
+            document.getElementById('eventModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+            
+            // تغییر استایل نوار ناوبری هنگام اسکرول
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

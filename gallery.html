@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گالری تصاویر - کافه آرین</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-dark: #0f1f38;
+            --primary-light: #2d4d7a;
+            --secondary: #4a90e2;
+            --accent: #63b3ed;
+            --accent-light: #90cdf4;
+            --text: #f7fafc;
+            --text-light: #e2e8f0;
+            --card-bg: rgba(30, 58, 95, 0.7);
+            --card-bg-solid: #1e3a5f;
+            --nav-bg: rgba(15, 31, 56, 0.95);
+            --success: #48bb78;
+            --warning: #ed8936;
+            --gradient: linear-gradient(135deg, #1e3a5f 0%, #4a90e2 100%);
+            --gradient-light: linear-gradient(135deg, #2d4d7a 0%, #63b3ed 100%);
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--primary-dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* انیمیشن‌های سفارشی */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes slideInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--accent); }
+            50% { box-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent-light); }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* استایل‌های اصلی */
+        .floating-element {
+            position: absolute;
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        /* ناوبری */
+        .navbar {
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.8rem 0;
+            background: rgba(15, 31, 56, 0.98);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-light);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* هیرو گالری */
+        .gallery-hero {
+            height: 50vh;
+            background: 
+                linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%),
+                radial-gradient(circle at 20% 80%, rgba(74, 144, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(99, 179, 237, 0.1) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .gallery-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(74, 144, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(99, 179, 237, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(144, 205, 244, 0.05) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .gallery-hero-content {
+            z-index: 2;
+            position: relative;
+            animation: slideInUp 1.5s ease-out;
+        }
+
+        .gallery-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-hero p {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* فیلترهای گالری */
+        .gallery-filters {
+            background: var(--card-bg-solid);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 80px;
+            z-index: 900;
+            border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+            box-shadow: var(--shadow);
+        }
+
+        .filters-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--text);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-light);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            color: var(--primary-dark);
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .filter-btn.active::before,
+        .filter-btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* گالری تصاویر */
+        .gallery-container {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-light);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 179, 237, 0.5);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(15, 31, 56, 0.9), transparent);
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .gallery-actions {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-actions {
+            opacity: 1;
+        }
+
+        .gallery-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 31, 56, 0.7);
+            color: var(--text);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .gallery-btn:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        /* مدال نمایش تصویر */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 20, 35, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--card-bg-solid);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(99, 179, 237, 0.3);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            animation: slideInUp 0.4s ease;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.2rem;
+            left: 1.2rem;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--accent);
+            background: none;
+            border: none;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            background: rgba(99, 179, 237, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .modal-image {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .modal-description {
+            color: var(--text-light);
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        /* فوتر */
+        footer {
+            background: 
+                linear-gradient(135deg, #0a1425 0%, #0f1f38 50%, #1a365d 100%),
+                radial-gradient(circle at 80% 20%, rgba(30, 58, 95, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(15, 31, 56, 0.4) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid rgba(99, 179, 237, 0.3);
+            padding: 4rem 1rem 2rem;
+            margin-top: 4rem;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e3a5f' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: backgroundShift 20s linear infinite;
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-section h3 {
+            color: var(--accent-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 0.7rem;
+            font-weight: 700;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .footer-section p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(99, 179, 237, 0.4);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .footer-link i {
+            margin-left: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-light);
+            transform: translateX(-5px);
+        }
+
+        .footer-link:hover i {
+            transform: translateX(-3px);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .contact-details {
+            flex: 1;
+        }
+
+        .contact-label {
+            display: block;
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-value {
+            display: block;
+            color: var(--text);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-value:hover {
+            color: var(--accent-light);
+        }
+
+        .designer-credit {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(99, 179, 237, 0.1);
+            color: var(--text-light);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .designer-credit strong {
+            color: var(--accent-light);
+            font-weight: 800;
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 1200px) {
+            .nav-container, .filters-container {
+                padding: 0 1.5rem;
+            }
+            
+            .gallery-hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .gallery-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .gallery-hero p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .gallery-hero {
+                height: 40vh;
+                margin-top: 120px;
+            }
+            
+            .gallery-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-hero p {
+                font-size: 1rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2.5rem;
+            }
+            
+            .footer-section h3::after {
+                right: 50%;
+                transform: translateX(50%);
+            }
+            
+            .contact-item {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav-container, .filters-container, .gallery-container {
+                padding: 0 1rem;
+            }
+            
+            .gallery-hero {
+                height: 35vh;
+            }
+            
+            .gallery-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* اسکرول بار سفارشی */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-light);
+        }
+        /* هیرو گالری پیشرفته */
+.gallery-hero {
+    height: 60vh;
+    background: 
+        linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%),
+        radial-gradient(circle at 20% 80%, rgba(74, 144, 226, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(99, 179, 237, 0.1) 0%, transparent 50%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 80px;
+}
+
+.gallery-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(74, 144, 226, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(99, 179, 237, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(144, 205, 244, 0.05) 0%, transparent 50%);
+    animation: pulse 8s ease-in-out infinite;
+}
+
+.gallery-hero-content {
+    z-index: 2;
+    position: relative;
+    animation: slideInUp 1.5s ease-out;
+}
+
+.gallery-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent-light), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-hero p {
+    font-size: 1.3rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* آیکون‌های متحرک گالری */
+.gallery-icon {
+    position: absolute;
+    font-size: 2rem;
+    color: rgba(99, 179, 237, 0.7);
+    z-index: 1;
+    animation: floatGallery 6s ease-in-out infinite;
+}
+
+.gallery-icon.camera {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.gallery-icon.photo {
+    top: 70%;
+    left: 15%;
+    animation-delay: 1s;
+}
+
+.gallery-icon.frame {
+    top: 30%;
+    right: 20%;
+    animation-delay: 2s;
+}
+
+.gallery-icon.grid {
+    bottom: 25%;
+    right: 10%;
+    animation-delay: 3s;
+}
+
+.gallery-icon.heart {
+    top: 50%;
+    left: 20%;
+    animation-delay: 4s;
+}
+
+/* فریم‌های شناور */
+.floating-frame {
+    position: absolute;
+    border: 3px solid rgba(99, 179, 237, 0.4);
+    border-radius: 10px;
+    background: rgba(30, 58, 95, 0.3);
+    backdrop-filter: blur(5px);
+    animation: floatFrame 8s ease-in-out infinite;
+    z-index: 1;
+}
+
+.floating-frame.small {
+    width: 80px;
+    height: 60px;
+    top: 25%;
+    right: 5%;
+    animation-delay: 0.5s;
+}
+
+.floating-frame.medium {
+    width: 120px;
+    height: 90px;
+    bottom: 30%;
+    left: 8%;
+    animation-delay: 2.5s;
+}
+
+.floating-frame.large {
+    width: 150px;
+    height: 110px;
+    top: 60%;
+    right: 25%;
+    animation-delay: 1.5s;
+}
+
+/* نقاط درخشان */
+.shining-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--accent-light);
+    border-radius: 50%;
+    animation: shine 3s ease-in-out infinite;
+    box-shadow: 0 0 10px 2px var(--accent-light);
+}
+
+.shining-dot:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; }
+.shining-dot:nth-child(2) { top: 80%; left: 30%; animation-delay: 1s; }
+.shining-dot:nth-child(3) { top: 40%; right: 25%; animation-delay: 2s; }
+.shining-dot:nth-child(4) { top: 65%; right: 15%; animation-delay: 1.5s; }
+.shining-dot:nth-child(5) { top: 25%; right: 35%; animation-delay: 0.5s; }
+
+/* انیمیشن‌های جدید */
+@keyframes floatGallery {
+    0%, 100% { 
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 0.7;
+    }
+    33% { 
+        transform: translateY(-20px) rotate(5deg) scale(1.1);
+        opacity: 1;
+    }
+    66% { 
+        transform: translateY(10px) rotate(-3deg) scale(0.9);
+        opacity: 0.8;
+    }
+}
+
+@keyframes floatFrame {
+    0%, 100% { 
+        transform: translateY(0) rotate(0deg);
+        box-shadow: 0 5px 15px rgba(99, 179, 237, 0.2);
+    }
+    50% { 
+        transform: translateY(-15px) rotate(2deg);
+        box-shadow: 0 15px 30px rgba(99, 179, 237, 0.4);
+    }
+}
+
+@keyframes shine {
+    0%, 100% { 
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.5);
+    }
+}
+
+@keyframes slideInUp {
+    from { 
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* دکمه CTA */
+.cta-button {
+    background: var(--gradient-light);
+    color: var(--primary-dark);
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ریسپانسیو */
+@media (max-width: 768px) {
+    .gallery-hero {
+        height: 50vh;
+    }
+    
+    .gallery-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .gallery-hero p {
+        font-size: 1.1rem;
+    }
+    
+    .gallery-icon {
+        font-size: 1.5rem;
+    }
+    
+    .floating-frame {
+        display: none;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- عناصر شناور در پس‌زمینه -->
+    <div class="floating-element" style="width: 150px; height: 150px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+    <div class="floating-element" style="width: 100px; height: 100px; top: 70%; right: 10%; animation-delay: 2s;"></div>
+    <div class="floating-element" style="width: 120px; height: 120px; top: 30%; right: 15%; animation-delay: 4s;"></div>
+    <div class="floating-element" style="width: 80px; height: 80px; bottom: 20%; left: 8%; animation-delay: 1s;"></div>
+
+    <!-- ناوبری -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="./index.html" class="logo">
+                <i class="fas fa-mug-hot"></i>
+                کافه آرین
+            </a>
+            <div class="nav-links">
+                <a href="./index.html" class="nav-link">صفحه اصلی</a>
+                <a href="./gallery.html" class="nav-link">گالری تصاویر</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- هیرو گالری پیشرفته -->
+<section class="gallery-hero">
+    <!-- آیکون‌های متحرک -->
+    <i class="gallery-icon camera fas fa-camera"></i>
+    <i class="gallery-icon photo fas fa-image"></i>
+    <i class="gallery-icon frame fas fa-square"></i>
+    <i class="gallery-icon grid fas fa-th"></i>
+    <i class="gallery-icon heart fas fa-heart"></i>
+    
+    <!-- فریم‌های شناور -->
+    <div class="floating-frame small"></div>
+    <div class="floating-frame medium"></div>
+    <div class="floating-frame large"></div>
+    
+    <!-- نقاط درخشان -->
+    <div class="shining-dot"></div>
+    <div class="shining-dot"></div>
+    <div class="shining-dot"></div>
+    <div class="shining-dot"></div>
+    <div class="shining-dot"></div>
+    
+    <div class="gallery-hero-content">
+        <h1>گالری تصاویر کافه آرین</h1>
+        <p>لحظات به یاد ماندنی و فضای دلنشین کافه را در گالری تصاویر ما ببینید</p>
+        <button class="cta-button">مشاهده گالری</button>
+    </div>
+</section>
+
+    <!-- فیلترهای گالری -->
+    <div class="gallery-filters">
+        <div class="filters-container">
+            <button class="filter-btn active" data-filter="all">همه</button>
+            <button class="filter-btn" data-filter="interior">دکوراسیون داخلی</button>
+            <button class="filter-btn" data-filter="food">غذا و نوشیدنی</button>
+            <button class="filter-btn" data-filter="events">رویدادها</button>
+            <button class="filter-btn" data-filter="customers">مشتریان</button>
+        </div>
+    </div>
+
+    <!-- گالری تصاویر -->
+    <main class="gallery-container">
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- تصاویر به صورت داینامیک اضافه می‌شوند -->
+        </div>
+    </main>
+
+    <!-- مدال نمایش تصویر -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <img src="" alt="" class="modal-image" id="modalImage">
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <p class="modal-description" id="modalDescription"></p>
+        </div>
+    </div>
+
+    <!-- فوتر -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>درباره کافه آرین</h3>
+                <p>با بیش از ۵ سال سابقه درخشان در ارائه قهوه و نوشیدنی‌های ویژه، میزبان لحظات خوش و به یاد ماندنی شما در فضایی مدرن و آرامش‌بخش هستیم.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>لینک‌های سریع</h3>
+                <ul class="footer-links">
+                    <li><a href="index-16.html" class="footer-link"><i class="fas fa-chevron-left"></i>صفحه اصلی</a></li>
+                    <li><a href="gallery.html" class="footer-link"><i class="fas fa-chevron-left"></i>گالری تصاویر</a></li>
+                    <li><a href="#" class="footer-link"><i class="fas fa-chevron-left"></i>رزرو میز</a></li>
+                    <li><a href="#" class="footer-link"><i class="fas fa-chevron-left"></i>رویدادها</a></li>
+                    <li><a href="#" class="footer-link"><i class="fas fa-chevron-left"></i>تماس با ما</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>اطلاعات تماس</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">آدرس</span>
+                            <span class="contact-value">تهران، خیابان نمونه، پلاک ۱۲۳</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">تلفن</span>
+                            <a href="tel:+982112345678" class="contact-value">۰۲۱-۱۲۳۴۵۶۷۸</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">ساعات کاری</span>
+                            <span class="contact-value">۸:۰۰ صبح تا ۱۲:۰۰ شب</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="designer-credit">
+            طراحی و توسعه توسط <strong>آرین حسنی نیا</strong>
+        </div>
+    </footer>
+
+    <script>
+        // داده‌های تصاویر گالری
+        const galleryImages = [
+            {
+                id: 1,
+                title: "فضای داخلی کافه",
+                description: "طراحی مدرن و دکوراسیون شیک فضای داخلی کافه آرین که محیطی آرامش‌بخش برای مشتریان فراهم کرده است.",
+                category: "interior",
+                image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                id: 2,
+                title: "لاته آرت تخصصی",
+                description: "طراحی لاته آرت حرفه‌ای توسط باریستاهای مجرب کافه آرین که هنر و طعم را در کنار هم ارائه می‌دهد.",
+                category: "food",
+                image: "https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                id: 3,
+                title: "کیک‌های خانگی",
+                description: "انواع کیک‌های خانگی تازه و خوشمزه که هر روز در کافه آرین تهیه می‌شوند.",
+                category: "food",
+                image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1089&q=80"
+            },
+            {
+                id: 4,
+                title: "فضای بیرونی",
+                description: "محوطه بیرونی کافه با منظره‌ای زیبا که برای روزهای آفتابی و عصرهای دل‌انگیز مناسب است.",
+                category: "interior",
+                image: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1474&q=80"
+            },
+            {
+                id: 5,
+                title: "شب شعر و موسیقی",
+                description: "برگزاری شب شعر و موسیقی زنده در کافه آرین که محیطی فرهنگی و هنری ایجاد کرده است.",
+                category: "events",
+                image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+            },
+            {
+                id: 6,
+                title: "مشتریان وفادار",
+                description: "مشتریان وفادار کافه آرین که فضای صمیمی و دوستانه‌ای در کافه ایجاد کرده‌اند.",
+                category: "customers",
+                image: "https://images.unsplash.com/photo-1544148103-0773bf10d330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                id: 7,
+                title: "دسرهای ویژه",
+                description: "انواع دسرهای ویژه و خوشمزه که با بهترین مواد اولیه در کافه آرین تهیه می‌شوند.",
+                category: "food",
+                image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1065&q=80"
+            },
+            {
+                id: 8,
+                title: "کارگاه قهوه‌نوشی",
+                description: "برگزاری کارگاه‌های تخصصی قهوه‌نوشی و آموزش باریستا برای علاقه‌مندان به دنیای قهوه.",
+                category: "events",
+                image: "https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            }
+        ];
+
+        // تابع برای تولید کارت‌های گالری
+        function generateGalleryItems(images) {
+    const galleryGrid = document.getElementById('galleryGrid');
+    galleryGrid.innerHTML = '';
+    
+    images.forEach(image => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = `gallery-item ${image.category}`; // این خط اصلاح شد
+        galleryItem.setAttribute('data-category', image.category);
+        
+        galleryItem.innerHTML = `
+            <img src="${image.image}" alt="${image.title}" class="gallery-image">
+            <div class="gallery-overlay">
+                <h3 class="gallery-title">${image.title}</h3>
+                <p class="gallery-description">${image.description}</p>
+            </div>
+            <div class="gallery-actions">
+                <button class="gallery-btn view-btn" data-id="${image.id}">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <button class="gallery-btn like-btn">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
+        `;
+        
+        galleryGrid.appendChild(galleryItem);
+    });
+            
+            // اضافه کردن رویداد کلیک برای دکمه‌های مشاهده
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const imageId = parseInt(this.getAttribute('data-id'));
+                    openModal(imageId);
+                });
+            });
+            
+            // اضافه کردن رویداد کلیک برای دکمه‌های لایک
+            document.querySelectorAll('.like-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        this.style.animation = 'glow 0.5s ease';
+                        setTimeout(() => {
+                            this.style.animation = '';
+                        }, 500);
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                    }
+                });
+            });
+        }
+
+        // تابع برای باز کردن مدال نمایش تصویر
+        function openModal(imageId) {
+            const image = galleryImages.find(img => img.id === imageId);
+            if (!image) return;
+            
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            
+            modalImage.src = image.image;
+            modalImage.alt = image.title;
+            modalTitle.textContent = image.title;
+            modalDescription.textContent = image.description;
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // تابع برای بستن مدال
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // فیلتر کردن تصاویر بر اساس دسته‌بندی
+        function filterGallery(category) {
+            if (category === 'all') {
+                generateGalleryItems(galleryImages);
+            } else {
+                const filteredImages = galleryImages.filter(image => image.category === category);
+                generateGalleryItems(filteredImages);
+            }
+        }
+
+        // اجرای کدها پس از لود شدن صفحه
+        document.addEventListener('DOMContentLoaded', function() {
+            // تولید کارت‌های گالری
+            generateGalleryItems(galleryImages);
+            
+            // تنظیم رویداد کلیک برای دکمه‌های فیلتر
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // حذف کلاس active از همه دکمه‌ها
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // اضافه کردن کلاس active به دکمه کلیک شده
+                    this.classList.add('active');
+                    
+                    // فیلتر کردن گالری
+                    const category = this.getAttribute('data-filter');
+                    filterGallery(category);
+                });
+            });
+            
+            // تنظیم رویداد کلیک برای بستن مدال
+            document.querySelector('.close-modal').addEventListener('click', closeModal);
+            
+            // بستن مدال با کلیک خارج از محتوا
+            document.getElementById('imageModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+            
+            // تغییر استایل نوار ناوبری هنگام اسکرول
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
